@@ -1,10 +1,8 @@
 from app import app, db, sender
 from datetime import datetime
 from app.models import Attendee, Conference, Notification
-from flask import render_template, session, request, redirect, url_for, flash, make_response, session
+from flask import render_template, session, request, redirect, session
 from azure.servicebus import ServiceBusMessage
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 import logging
 
 @app.route('/')
