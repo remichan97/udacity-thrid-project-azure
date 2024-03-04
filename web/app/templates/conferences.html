@@ -1,0 +1,57 @@
+
+{% extends  'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+
+{% endblock %}
+
+{% block script %}
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#adminLink').addClass('current');
+        $('#attendeeTable').DataTable();
+    })
+</script>
+{% endblock %}
+
+{% block body %}
+<!-- Main -->
+<section class="wrapper style1">
+    <div class="container">
+
+        <div id="content">
+
+            <!-- Content -->
+
+            <article>
+                <header>
+                    <h2 style="text-align: center;">Conferences List</h2>
+                </header>
+                <table id="attendeeTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for conference in conferences %}
+                            <tr>
+                                <td>{{ conference.name }}</td>
+                                <td>{{ conference.date.strftime('%d-%m-%Y') }}</td>
+                                <td>{{ conference.price }}</td>
+                                <td>{{ conference.active }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+               
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}

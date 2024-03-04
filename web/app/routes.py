@@ -46,6 +46,11 @@ def attendees():
     attendees = Attendee.query.order_by(Attendee.submitted_date).all()
     return render_template('attendees.html', attendees=attendees)
 
+@app.route('/Conferences')
+def conferences():
+    conferences = Conference.query.order_by(Conference.date).all()
+    return render_template('conferences.html', conferences=conferences)
+
 
 @app.route('/Notifications')
 def notifications():
