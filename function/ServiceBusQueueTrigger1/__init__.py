@@ -1,17 +1,14 @@
-import azure.functions as func
 import logging
-import os
 from db_client import DbClient
 from datetime import datetime
 from sendgrid import Mail, SendGridAPIClient
+import os
+
+from azure.functions import ServiceBusMessage
 
 
-app = func.FunctionApp()
-
-@app.service_bus_queue_trigger(arg_name="azservicebus", queue_name="notificationqueue",
-                               connection="techconf_SERVICEBUS") 
-def servicebus_queue_trigger(azservicebus: func.ServiceBusMessage):
-    notification_id = int(azservicebus.get_body().decode('utf-8'))
+def main(msg: ServiceBusMessage):
+    notification_id = int(msg.get_body().decode('utf-8'))
     logging.info('Python ServiceBus queue trigger processed message: %s',notification_id)
 
     # TODO: Get connection to database
