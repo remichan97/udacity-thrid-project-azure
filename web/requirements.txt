@@ -31,7 +31,6 @@ python-dateutil
 python-http-client
 requests
 requests-oauthlib
-sendgrid
 six
 SQLAlchemy
 toml
