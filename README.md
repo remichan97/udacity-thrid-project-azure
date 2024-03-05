@@ -75,7 +75,7 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 Additional notes:  
 Database: On Production, High Availability is always prefered as they provide yet another safety net should a database node is down for any reason  
 Service Bus pricing: Premium tier is recommended for Production usage, however, if being in budget constraint, we can consider the Standard tier, as they are billed on each 13 Million operations, the service tier can still be adjusted according to the usage when needed  
-Function App: Function App provide ability to resue the App Serivce using for Web App when needed (for instance, keeping both the web and the function app on the same geolocation). This can be considered before going for the Premium plan, which set back around $437.78/ month for the EP1 configuation with additional 2 scale out instances. Consumption plan can also be considered as the choice should the budget is tight
+Function App: Function App provide ability to resue the App Serivce using for Web App when needed (for instance, keeping both the web and the function app on the same geolocation). This can be considered before going for the Premium plan, which set back around $437.78/ month for the EP1 configuation with additional 2 scale out instances. Consumption plan can also be considered as the choice should the budget is tight  
 Azure Key Vault: Both Standard, and Premium rate for secret queries are the same ($0.03 per 10,000 transaction per month)
 
 
