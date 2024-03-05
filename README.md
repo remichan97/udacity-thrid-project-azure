@@ -63,15 +63,21 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 
 | Azure Resource | Service Tier | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Cosmos DB PostgreSQL cluster* |Burstable 1vCore, 2GB memory, 32GB storage| $17.62/month|
-| *Azure Service Bus*   | Basic | approximately $0.05 per month |
-| *Azure Function App*   | Consumption | Free |
+| *Azure Cosmos DB PostgreSQL cluster* |Single node, 2 vCore, 8GB RAM, 256GB Storage, with High Availability enabled| $380.76/month|
+| *Azure Service Bus*   | Premium | $668.00/month |
+| *Azure Function App*   | Consumption | approximately $0.20/month (assuming execution count exceeded free quota, and executed another 1 million time each month) |
 | *Azure Storage Account*   | Consumption | approximately $0.02 per month |
-| *Azure Web App*                   | Free | Free |
-| *Azure Key Vault*                   | Standard | approximately $0.02 per month |
-| *SendGrid SaaS*                   | Free 100 | approximately $3.99 per month (assuming exceeded 100 free mail and sending 100 mails per day) |
+| *Azure Web App*    | Premium P1V3 | same as the app service plan |
+| *Azure App Service Plan*    | Premium P1V3 | approximately $113.15/ month |
+| *Azure Key Vault*  | Standard | approximately $0.30 per month (assuming 100,000 query per month) |
+| *SendGrid SaaS*     | Free 100 | approximately $3.99 per month (assuming exceeded 100 free mail and sending 100 mails per day) |
 
-Most number are approximate as the service used are billed on transactions/operations (such as Key Vault and Service Bus), while the Database are priced storage used, and vCore cost when left running 24/7
+Additional notes:  
+Database: On Production, High Availability is always prefered as they provide yet another safety net should a database node is down for any reason  
+Service Bus pricing: Premium tier is recommended for Production usage, however, if being in budget constraint, we can consider the Standard tier, as they are billed on each 13 Million operations, the service tier can still be adjusted according to the usage when needed  
+Function App: Function App provide ability to resue the App Serivce using for Web App when needed (for instance, keeping both the web and the function app on the same geolocation). This can be considered before going for the Premium plan, which set back around $437.78/ month for the EP1 configuation with additional 2 scale out instances. Consumption plan can also be considered as the choice should the budget is tight
+Azure Key Vault: Both Standard, and Premium rate for secret queries are the same ($0.03 per 10,000 transaction per month)
+
 
 ## Architecture Explanation
 Following are my explanation for my current deployments, and my reasoning behind the choice: 
