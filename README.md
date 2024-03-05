@@ -63,9 +63,22 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 
 | Azure Resource | Service Tier | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
+| *Azure Cosmos DB PostgreSQL cluster* |Burstable 1vCore, 2GB memory, 32GB storage| $17.62/month|
+| *Azure Service Bus*   | Basic | approximately $0.05 per month |
+| *Azure Function App*   | Consumption | Free |
+| *Azure Storage Account*   | Consumption | approximately $0.02 per month |
+| *Azure Web App*                   | Free | Free |
+| *Azure Key Vault*                   | Standard | approximately $0.02 per month |
+| *SendGrid SaaS*                   | Free 100 | approximately $3.99 per month (assuming exceeded 100 free mail and sending 100 mails per day) |
+
+Most number are approximate as the service used are billed on transactions/operations (such as Key Vault and Service Bus), while the Database are priced storage used, and vCore cost when left running 24/7
 
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+Following are my explanation for my current deployments, and my reasoning behind the choice: 
+ - **Azure Web App**: The project front-end were deployed using the Free tier App Service plan. Web App service was used instead of using VMs as they are much simpler to configure, and can also be scaled easily when needed
+ - **Azure Function App**: Comparing the standard App Service plans, the Consumption plan were selected as the plan provide a free quota of 1 million executions and execution time of 400,000 GB-s for each month. As the current application state, the total execution number should not exceed the free quota for the plan
+ - **Azure Service Bus**: This is used to receive notification ID to which then forwarded to the function app to work its magic. This is billed on operations, as such, the pricing should be minimum
+ - **Azure Cosmos DB PostgreSQL cluster**: Using CosmosDb as the database hosting of choice helps us scale easily, it also provide the ability to isolate tenants into their own nodes should the needs in the future
+ - **Azure Key Vault**: Key vault is used to store the app configuration data (such as database credentials, access URL, and various other credentials), these data should not be accesses much, as such, the Standard tier, which price per 10,000 transaction should cover us here.
+ - **Azure Storage Account**: This is needed to host the Web App instance, since the data stored by the app is not much, the pricing per month should be minimum
+ - **SendGrid SaaS**: This is used to provide the ability to send emails to the client. The current service tier provide a free 100 email sent per day. Due to the current application demands, this should be plenty for us.
